@@ -147,7 +147,7 @@ public class SecurityConfig {
         	        "https://medrassa-frontend.onrender.com"
         	    )
         	);
-        );
+        
 
         configuration.setAllowedMethods(
                 List.of(
