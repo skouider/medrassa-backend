@@ -55,14 +55,27 @@ public class ClasseServiceImpl implements ClasseService{
 			throw new RuntimeException("capacité < 0");
 		}
 		
-        List<ConfigurationInscription> configs = sessionOuverture.getConfigurations();
-        
-        for (ConfigurationInscription configurationInscription : configs) {
-			if(classe.getTypeClasse() != configurationInscription.getTypeClasse()) {
-				throw new RuntimeException
-				("le type de classe "+classe.getTypeClasse()+ " est incorrecte");
-			}
-		}
+//        List<ConfigurationInscription> configs = sessionOuverture.getConfigurations();
+//        
+//        for (ConfigurationInscription configurationInscription : configs) {
+//			if(classe.getTypeClasse() != configurationInscription.getTypeClasse()) {
+//				throw new RuntimeException
+//				("le type de classe "+classe.getTypeClasse()+ " est incorrecte");
+//			}
+//		}
+		List<ConfigurationInscription> configs = sessionOuverture.getConfigurations();
+	    boolean typeAutorise = false;
+
+	    for (ConfigurationInscription config : configs) {
+	        if (config.getTypeClasse() == classe.getTypeClasse()) {
+	            typeAutorise = true;
+	            break;
+	        }
+	    }
+
+	    if (!typeAutorise) {
+	        throw new RuntimeException("Le type " + classe.getTypeClasse() + " n'est pas autorisé pour cette session");
+	    }
 //		4. enregistrer
 		return classeRepository.save(classe);
 	}
